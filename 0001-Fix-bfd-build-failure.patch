@@ -1,0 +1,98 @@
+From 17f0f770ea14439c8dbfe6a787cd74c6ecde4384 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Mon, 22 Jul 2019 14:35:12 -0700
+Subject: [PATCH] Fix bfd build failure
+
+bfd wants either PACKAGE or PACKAGE_VERSION defined. See:
+https://sourceware.org/bugzilla/show_bug.cgi?id=15920 and
+https://sourceware.org/bugzilla/show_bug.cgi?id=14243 for details.
+---
+ src/lookup.c     | 4 ++--
+ src/lookup.h     | 3 +++
+ src/lookup_bfd.c | 4 ++--
+ src/lookup_kas.c | 4 ++--
+ 4 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/src/lookup.c b/src/lookup.c
+index ba54991..5e9bc69 100644
+--- a/src/lookup.c
++++ b/src/lookup.c
+@@ -24,6 +24,8 @@
+  * 1) /usr/lib/debug/<kernel version> using libbfd
+  * 2) /proc/kallsyms
+  */
++#include "lookup.h"
++
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <sys/utsname.h>
+@@ -33,8 +35,6 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
+-#include "lookup.h"
+-
+ extern struct lookup_methods bfd_methods;
+ extern struct lookup_methods kallsym_methods;
+ 
+diff --git a/src/lookup.h b/src/lookup.h
+index e6568d8..b82d66a 100644
+--- a/src/lookup.h
++++ b/src/lookup.h
+@@ -28,6 +28,9 @@
+ #include <stdlib.h>
+ #include <asm/types.h>
+ 
++#ifndef PACKAGE
++#define PACKAGE
++#endif
+ 
+ /*
+  * Initalization routine
+diff --git a/src/lookup_bfd.c b/src/lookup_bfd.c
+index cc7010b..ff5200b 100644
+--- a/src/lookup_bfd.c
++++ b/src/lookup_bfd.c
+@@ -22,6 +22,8 @@
+  * symbollic name using the bfd library
+  */
+ 
++#include "lookup.h"
++
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <sys/utsname.h>
+@@ -31,8 +33,6 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
+-#include "lookup.h"
+-
+ 
+ static int lookup_bfd_init(void)
+ {
+diff --git a/src/lookup_kas.c b/src/lookup_kas.c
+index 5e05630..c654f4f 100644
+--- a/src/lookup_kas.c
++++ b/src/lookup_kas.c
+@@ -22,6 +22,8 @@
+  * symbolic name using /proc/kallsyms
+  */
+ 
++#include "lookup.h"
++
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <stdint.h>
+@@ -33,8 +35,6 @@
+ #include <sys/stat.h>
+ #include <sys/queue.h>
+ 
+-#include "lookup.h"
+-
+ struct symbol_entry {
+ 	char *sym_name;
+ 	__u64 start;
+-- 
+2.22.0
+
