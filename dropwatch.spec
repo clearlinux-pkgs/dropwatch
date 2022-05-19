@@ -4,7 +4,7 @@
 #
 Name     : dropwatch
 Version  : 1.5.4
-Release  : 142
+Release  : 143
 URL      : https://github.com/nhorman/dropwatch/archive/v1.5.4/dropwatch-1.5.4.tar.gz
 Source0  : https://github.com/nhorman/dropwatch/archive/v1.5.4/dropwatch-1.5.4.tar.gz
 Summary  : Kernel dropped packet monitor
