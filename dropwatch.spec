@@ -4,7 +4,7 @@
 #
 Name     : dropwatch
 Version  : 1.5.4
-Release  : 147
+Release  : 148
 URL      : https://github.com/nhorman/dropwatch/archive/v1.5.4/dropwatch-1.5.4.tar.gz
 Source0  : https://github.com/nhorman/dropwatch/archive/v1.5.4/dropwatch-1.5.4.tar.gz
 Summary  : Kernel dropped packet monitor
@@ -59,7 +59,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1650340237
+export SOURCE_DATE_EPOCH=1661889716
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -79,10 +79,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1650340237
+export SOURCE_DATE_EPOCH=1661889716
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/dropwatch
-cp %{_builddir}/dropwatch-1.5.4/COPYING %{buildroot}/usr/share/package-licenses/dropwatch/b47456e2c1f38c40346ff00db976a2badf36b5e3
+cp %{_builddir}/dropwatch-%{version}/COPYING %{buildroot}/usr/share/package-licenses/dropwatch/b47456e2c1f38c40346ff00db976a2badf36b5e3 || :
 %make_install
 
 %files
